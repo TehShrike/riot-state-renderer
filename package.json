@@ -1,0 +1,23 @@
+{
+  "name": "riot-state-renderer",
+  "version": "1.0.0",
+  "description": "a RiotJS-based renderer for the abstract-state-router",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TehShrike/riot-state-renderer.git"
+  },
+  "keywords": [
+    "router",
+    "riot"
+  ],
+  "author": "TehShrike",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/TehShrike/riot-state-renderer/issues"
+  },
+  "homepage": "https://github.com/TehShrike/riot-state-renderer"
+}
