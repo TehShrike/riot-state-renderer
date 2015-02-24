@@ -7,13 +7,16 @@ module.exports = function RactiveStateRouter(options) {
 	var defaultOpts = extend({}, options)
 
 	return {
-		render: function render(element, template, cb) {
+		render: function render(context, cb) {
+			var element = context.element
+			var template = context.template
+			var content = context.content
 			if (typeof element === 'string') {
 				element = document.querySelector(element)
 			}
 
 			try {
-				var tag = riot.mountTo(element, template, extend({}, defaultOpts))
+				var tag = riot.mountTo(element, template, extend({}, defaultOpts, content))
 
 				if (!tag) {
 					console.error('Error creating riot tag', template, 'on', element)
@@ -24,8 +27,11 @@ module.exports = function RactiveStateRouter(options) {
 				cb(e)
 			}
 		},
-		reset: function reset(tag, cb) {
-			tag.opts = extend({}, defaultOpts)
+		reset: function reset(context, cb) {
+			var tag = context.domApi
+
+			tag.trigger('reset')
+			tag.opts = extend({}, defaultOpts, context.content)
 			tag.update()
 			cb()
 		},
@@ -56,7 +62,7 @@ module.exports = function RactiveStateRouter(options) {
 	}
 }
 
-// Since I can't figure out how to use object literals in Riot expressions
+// Since I can't figure out how to use object literals in a Riot expressions
 function makeRiotPath() {
 	try {
 		var args = Array.prototype.slice.apply(arguments)
