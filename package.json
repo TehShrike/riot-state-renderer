@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/TehShrike/riot-state-renderer/issues"
   },
-  "homepage": "https://github.com/TehShrike/riot-state-renderer"
+  "homepage": "https://github.com/TehShrike/riot-state-renderer",
+  "dependencies": {
+    "extend": "^2.0.0"
+  }
 }
