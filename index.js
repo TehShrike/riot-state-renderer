@@ -2,8 +2,6 @@ var riot = require('riot')
 var extend = require('extend')
 
 module.exports = function RactiveStateRouter(options) {
-	var stateRouter = null
-
 	var defaultOpts = extend({}, options)
 
 	return {
@@ -52,12 +50,12 @@ module.exports = function RactiveStateRouter(options) {
 			defaultOpts.makePath = makeRiotPath.bind(null, makePath)
 		},
 		setUpStateIsActiveFunction: function setUpStateIsActiveFunction(stateIsActive) {
-			defaultOpts.active = function(stateName) {
-				return stateIsActive(stateName) ? 'active' : ''
-			}
+			defaultOpts.active = makeRiotPath.bind(null, stateIsActive)
 		},
 		handleStateRouter: function handleStateRouter(newStateRouter) {
-			stateRouter = newStateRouter
+			newStateRouter.on('stateChangeEnd', function() {
+				riot.update()
+			})
 		}
 	}
 }
@@ -72,13 +70,11 @@ function makeRiotPath() {
 		for (var i = 0; i < args.length; i += 2) {
 			opts[args[i]] = args[i + 1]
 		}
-		makePath(stateName, opts)
+		return makePath(stateName, opts)
 	} catch (e) {
 		console.log(e)
 	}
-	return makePath(stateName, opts)
 }
-
 
 function makeEmptyCopyAtSameLevel(element) {
 	var parent = element.parentNode
