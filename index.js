@@ -1,8 +1,8 @@
 var riot = require('riot')
-var extend = require('extend')
+var xtend = require('xtend')
 
 module.exports = function RactiveStateRouter(options) {
-	var defaultOpts = extend({}, options)
+	var defaultOpts = xtend(options)
 
 	return {
 		render: function render(context, cb) {
@@ -14,7 +14,7 @@ module.exports = function RactiveStateRouter(options) {
 			}
 
 			try {
-				var tag = riot.mountTo(element, template, extend({}, defaultOpts, content))
+				var tag = riot.mountTo(element, template, xtend(defaultOpts, content))
 
 				if (!tag) {
 					console.error('Error creating riot tag', template, 'on', element)
@@ -29,7 +29,7 @@ module.exports = function RactiveStateRouter(options) {
 			var tag = context.domApi
 
 			tag.trigger('reset')
-			tag.opts = extend({}, defaultOpts, context.content)
+			tag.opts = xtend(defaultOpts, context.content)
 			tag.update()
 			cb()
 		},
@@ -63,7 +63,7 @@ module.exports = function RactiveStateRouter(options) {
 // Since I can't figure out how to use object literals in a Riot expressions
 function makeRiotPath() {
 	try {
-		var args = Array.prototype.slice.apply(arguments)
+		var args = Array.prototype.slice.call(arguments)
 		var makePath = args.shift()
 		var stateName = args.shift()
 		var opts = {}
