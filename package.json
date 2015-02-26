@@ -1,6 +1,6 @@
 {
   "name": "riot-state-renderer",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "a RiotJS-based renderer for the abstract-state-router",
   "main": "index.js",
   "scripts": {
