@@ -34,7 +34,6 @@ module.exports = function RactiveStateRouter(options) {
 			cb()
 		},
 		destroy: function destroy(tag, cb) {
-			makeEmptyCopyAtSameLevel(tag.root) // unmount removes the original element, so we need to recreate it manually
 			tag.unmount()
 			cb()
 		},
@@ -74,11 +73,4 @@ function makeRiotPath() {
 	} catch (e) {
 		console.log(e)
 	}
-}
-
-function makeEmptyCopyAtSameLevel(element) {
-	var parent = element.parentNode
-	var elementPrime = element.cloneNode(false)
-	parent.insertBefore(elementPrime, element)
-	return elementPrime
 }
