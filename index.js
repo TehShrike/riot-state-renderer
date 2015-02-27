@@ -1,60 +1,59 @@
 var riot = require('riot')
 var xtend = require('xtend')
 
-module.exports = function RactiveStateRouter(options) {
+module.exports = function RiotStateRenderer(options) {
 	var defaultOpts = xtend(options)
 
-	return {
-		render: function render(context, cb) {
-			var element = context.element
-			var template = context.template
-			var content = context.content
-			if (typeof element === 'string') {
-				element = document.querySelector(element)
-			}
+	return function makeRenderer(stateRouter) {
+		defaultOpts.makePath = makeRiotPath.bind(null, stateRouter.makePath)
 
-			try {
-				var tag = riot.mount(element, template, xtend(defaultOpts, content))
+		defaultOpts.active = makeRiotPath.bind(null, stateRouter.stateIsActive)
 
-				if (!tag) {
-					console.error('Error creating riot tag', template, 'on', element)
+		stateRouter.on('stateChangeEnd', function() {
+			riot.update()
+		})
+
+		return {
+			render: function render(context, cb) {
+				var element = context.element
+				var template = context.template
+				var content = context.content
+				if (typeof element === 'string') {
+					element = document.querySelector(element)
 				}
 
-				cb(null, tag)
-			} catch (e) {
-				cb(e)
-			}
-		},
-		reset: function reset(context, cb) {
-			var tag = context.domApi
+				try {
+					var tag = riot.mount(element, template, xtend(defaultOpts, content))
 
-			tag.trigger('reset')
-			tag.opts = xtend(defaultOpts, context.content)
-			tag.update()
-			cb()
-		},
-		destroy: function destroy(tag, cb) {
-			tag.unmount()
-			cb()
-		},
-		getChildElement: function getChildElement(tag, cb) {
-			try {
-				var child = tag.root.querySelector('ui-view')
-				cb(null, child)
-			} catch (e) {
-				cb(e)
+					if (!tag) {
+						console.error('Error creating riot tag', template, 'on', element)
+					}
+
+					cb(null, tag)
+				} catch (e) {
+					cb(e)
+				}
+			},
+			reset: function reset(context, cb) {
+				var tag = context.domApi
+
+				tag.trigger('reset')
+				tag.opts = xtend(defaultOpts, context.content)
+				tag.update()
+				cb()
+			},
+			destroy: function destroy(tag, cb) {
+				tag.unmount()
+				cb()
+			},
+			getChildElement: function getChildElement(tag, cb) {
+				try {
+					var child = tag.root.querySelector('ui-view')
+					cb(null, child)
+				} catch (e) {
+					cb(e)
+				}
 			}
-		},
-		setUpMakePathFunction: function setUpMakePathFunction(makePath) {
-			defaultOpts.makePath = makeRiotPath.bind(null, makePath)
-		},
-		setUpStateIsActiveFunction: function setUpStateIsActiveFunction(stateIsActive) {
-			defaultOpts.active = makeRiotPath.bind(null, stateIsActive)
-		},
-		handleStateRouter: function handleStateRouter(newStateRouter) {
-			newStateRouter.on('stateChangeEnd', function() {
-				riot.update()
-			})
 		}
 	}
 }
