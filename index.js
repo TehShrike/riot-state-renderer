@@ -14,7 +14,7 @@ module.exports = function RactiveStateRouter(options) {
 			}
 
 			try {
-				var tag = riot.mountTo(element, template, xtend(defaultOpts, content))
+				var tag = riot.mount(element, template, xtend(defaultOpts, content))
 
 				if (!tag) {
 					console.error('Error creating riot tag', template, 'on', element)
