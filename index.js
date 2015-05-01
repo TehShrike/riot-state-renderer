@@ -23,7 +23,7 @@ module.exports = function RiotStateRenderer(options) {
 				}
 
 				try {
-					var tag = riot.mount(element, template, xtend(defaultOpts, content))
+					var tag = riot.mount(element, template, xtend(defaultOpts, content))[0]
 
 					if (!tag) {
 						console.error('Error creating riot tag', template, 'on', element)
