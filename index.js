@@ -43,7 +43,7 @@ module.exports = function RiotStateRenderer(options) {
 				cb()
 			},
 			destroy: function destroy(tag, cb) {
-				tag.unmount()
+				tag.unmount(true)
 				cb()
 			},
 			getChildElement: function getChildElement(tag, cb) {
