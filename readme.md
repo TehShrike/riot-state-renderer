@@ -1,5 +1,7 @@
 Use [Riot](https://muut.com/riotjs/) with [abstract-state-router](https://github.com/TehShrike/abstract-state-router)!
 
+Warning: Muut has on several occasions broken backwards compatibility in the Riot API without bumping major or even minor version numbers.  If you get weird errors, make sure you're on at least 2.0.15.  If you are getting errors on a version greater than 2.0.15 please [open an issue](https://github.com/TehShrike/riot-state-renderer/issues) or pull request.
+
 ## Usage
 
 ```js
