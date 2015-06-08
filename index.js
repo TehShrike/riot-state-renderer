@@ -28,6 +28,9 @@ module.exports = function RiotStateRenderer(options) {
 					if (!tag) {
 						console.error('Error creating riot tag', template, 'on', element)
 					}
+					if (tag.root.attributes['riot-tag'] && tag.root.attributes['riot-tag'].value !== template) {
+						tag.root.attributes['riot-tag'].value = template;
+					}
 
 					cb(null, tag)
 				} catch (e) {
