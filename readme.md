@@ -2,6 +2,16 @@ Use [Riot](https://muut.com/riotjs/) with [abstract-state-router](https://github
 
 Warning: Muut has on several occasions broken backwards compatibility in the Riot API without bumping major or even minor version numbers.  If you get weird errors, make sure you're on at least 2.0.15.  If you are getting errors on a version greater than 2.0.15 please [open an issue](https://github.com/TehShrike/riot-state-renderer/issues) or pull request.
 
+## Install
+
+npm + your favorite CommonJS bundler is easiest.
+
+```sh
+npm install riot-state-renderer
+```
+
+You can also [download the stand-alone build from wzrd.in](https://wzrd.in/standalone/riot-state-renderer@latest). If you include it in a `<script>` tag, a `riotStateRenderer` function will be available on the global scope.
+
 ## Usage
 
 ```js
